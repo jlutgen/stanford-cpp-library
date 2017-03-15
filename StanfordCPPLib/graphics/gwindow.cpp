@@ -1070,6 +1070,8 @@ static std::string canonicalColorName(const std::string& str) {
 int convertColorToRGB(const std::string& colorName) {
     if (colorName == "") return -1;
     if (colorName[0] == '#') {
+        int aa = 0xff;
+        if (colorName.length() == 9) aa = 0;
         std::istringstream is(colorName.substr(1) + "@");
         int rgb;
         char terminator = '\0';
@@ -1077,7 +1079,7 @@ int convertColorToRGB(const std::string& colorName) {
         if (terminator != '@') {
             error("convertColorToRGB: Illegal color - " + colorName);
         }
-        return rgb;
+        return rgb | aa << 24;
     }
     std::string name = canonicalColorName(colorName);
     if (!colorTable().containsKey(name)) {
@@ -1089,6 +1091,8 @@ int convertColorToRGB(const std::string& colorName) {
 std::string convertRGBToColor(int rgb) {
     std::ostringstream os;
     os << std::hex << std::setfill('0') << std::uppercase << "#";
+    int aa = (rgb >> 24 & 0xFF);
+    if (aa != 0xFF) os << std::setw(2) << aa;
     os << std::setw(2) << (rgb >> 16 & 0xFF);
     os << std::setw(2) << (rgb >> 8 & 0xFF);
     os << std::setw(2) << (rgb & 0xFF);

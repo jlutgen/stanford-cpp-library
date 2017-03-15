@@ -237,6 +237,7 @@ exists($$PWD/output/*) {
 # END SECTION FOR SPECIFYING SOURCE/LIBRARY/RESOURCE FILES OF PROJECT         #
 ###############################################################################
 
+DEFINES += PIPE_DEBUG=true
 
 ###############################################################################
 # BEGIN SECTION FOR SPECIFYING COMPILER/LINKER FLAGS AND LIBRARIES            #

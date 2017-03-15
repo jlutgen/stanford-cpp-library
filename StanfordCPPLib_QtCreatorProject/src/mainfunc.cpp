@@ -226,5 +226,26 @@ int main() {
 //        }
 //    }
     
+    GWindow gw(500, 500);
+//    gw.add(new GLine(0, 0, gw.getWidth(), gw.getHeight()));
+//    gw.add(new GLine(0, gw.getHeight(), gw.getWidth(), 0));
+    gw.drawLine(100, 0, 500, 500);
+//    gw.setColor("#0000ff");
+//    gw.fillRect(100, 100, 100, 100);
+//    gw.setColor("#44ee4411");
+    //gw.fillRect(150, 150, 100, 100);
+
+//    for (int x = 200; x < 300; x++) {
+//        for (int y = 100; y < 200; y++) {
+//            gw.setPixelARGB(x, y, 0x11ff0000);
+//        }
+//    }
+//    for (int x = 250; x < 300; x++) {
+//        for (int y = 100; y < 200; y++) {
+//            gw.setPixelARGB(x, y, 0x1100ff00);
+//        }
+//    }
+
+    std::cout << "done." << std::endl;
     return 0;
 }
