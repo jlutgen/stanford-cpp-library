@@ -37,7 +37,6 @@ void alphatest() {
     gw.add(oval, 200, 200);
 
     GRect *rect = new GRect(60, 60);
-    GArc *rect = new GArc(60, 60, 45, 100);
     rect->setColor("black");
     rect->setFillColor(oval->getColor());
     rect->setFilled(true);

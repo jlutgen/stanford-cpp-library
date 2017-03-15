@@ -238,6 +238,17 @@ int main() {
 //    gw.setColor("#44ee4411");
     //gw.fillRect(150, 150, 100, 100);
 
+    // Note note(1.5, Note::G, 5, Note::NATURAL, false);
+//    Note note("1.5 G 5 NATURAL false");
+//    Note rest("1 R false");
+//    // std::cout << "NOTE: " << note << std::endl;
+//    std::cout << "about to play ... " << std::endl;
+//    note.play();
+//    rest.play();
+//    std::cout << "about to play 2 ... " << std::endl;
+//    note.play();
+//    rest.play();
+
     alphatest();
     std::cout << "done." << std::endl;
     return 0;
