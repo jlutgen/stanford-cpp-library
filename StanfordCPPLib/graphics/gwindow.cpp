@@ -1070,9 +1070,23 @@ static std::string canonicalColorName(const std::string& str) {
 int convertColorToRGB(const std::string& colorName) {
     if (colorName == "") return -1;
     if (colorName[0] == '#') {
+        // deal with colorName of the form "#aarrggbb" or "#rrggbb"
         int aa = 0xff;
-        if (colorName.length() == 9) aa = 0;
-        std::istringstream is(colorName.substr(1) + "@");
+        std::string name = colorName.substr(1);
+        int len = name.length();
+        if (len == 8) {
+            std::istringstream is(name.substr(0, 2) + "@");
+            char terminator = '\0';
+            is >> std::hex >> aa >> terminator;
+            if (terminator != '@') {
+                error("convertColorToRGB: Illegal color - " + colorName);
+            }
+            name = name.substr(2);
+        } else {
+            if (len != 6)
+                error("convertColorToRGB: Illegal color - " + colorName);
+        }
+        std::istringstream is(name + "@");
         int rgb;
         char terminator = '\0';
         is >> std::hex >> rgb >> terminator;
@@ -1091,6 +1105,7 @@ int convertColorToRGB(const std::string& colorName) {
 std::string convertRGBToColor(int rgb) {
     std::ostringstream os;
     os << std::hex << std::setfill('0') << std::uppercase << "#";
+    rgb = fixAlpha(rgb);
     int aa = (rgb >> 24 & 0xFF);
     if (aa != 0xFF) os << std::setw(2) << aa;
     os << std::setw(2) << (rgb >> 16 & 0xFF);
@@ -1105,11 +1120,11 @@ void exitGraphics() {
     }
 }
 
-// if RGB is not completely black, but alpha is 0, assume that the
-// client meant to use an opaque color and add ff as alpha channel
+// if alpha is 0, assume that the client meant to use
+// an opaque color and add ff as alpha channel
 static int fixAlpha(int argb) {
     int alpha = ((argb & 0xff000000) >> 24) & 0x000000ff;
-    if (alpha == 0 && (argb & 0x00ffffff) != 0) {
+    if (alpha == 0) {
         argb = argb | 0xff000000;   // set full 255 alpha
     }
     return argb;

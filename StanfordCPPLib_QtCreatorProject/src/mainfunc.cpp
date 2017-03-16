@@ -32,6 +32,9 @@
 #include "map.h"
 #include "simpio.h"
 #include "vector.h"
+
+#include "alphatest.h"
+
 using namespace std;
 
 void bar() {
@@ -235,17 +238,7 @@ int main() {
 //    gw.setColor("#44ee4411");
     //gw.fillRect(150, 150, 100, 100);
 
-//    for (int x = 200; x < 300; x++) {
-//        for (int y = 100; y < 200; y++) {
-//            gw.setPixelARGB(x, y, 0x11ff0000);
-//        }
-//    }
-//    for (int x = 250; x < 300; x++) {
-//        for (int y = 100; y < 200; y++) {
-//            gw.setPixelARGB(x, y, 0x1100ff00);
-//        }
-//    }
-
+    alphatest();
     std::cout << "done." << std::endl;
     return 0;
 }

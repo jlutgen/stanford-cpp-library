@@ -673,6 +673,26 @@ public:
      * <code>"#rrggbb"</code> where <code>rr</code>, <code>gg</code>, and
      * <code>bb</code> are pairs of hexadecimal digits indicating the
      * red, green, and blue components of the color.
+     *
+     * <p>A color string may also have the form <code>"#aarrggbb"</code>, where
+     * the extra pair <code>aa</code> of hexadecimal digits indicates the
+     * <b><i>alpha component</i></b> of the color. Like the red, green, and
+     * blue components, the alpha component may have any value in the range
+     * 0..255 (0x00..0xff). The alpha component specifies the transparency of
+     * the color. For example, a color with an alpha component of 0 is
+     * completely transparent, one with an alpha component of 128 (0x80) is 50%
+     * transparent, and one with an alpha component of 255 (0xff) is completely
+     * opaque. If the <code>aa</code> pair is omitted from the color string,
+     * the alpha component is set to 255 by default.
+     *
+     * Sample usages:
+     * <pre>
+     *     gw.setColor("LIGHT_GRAY");  // these five statements all have the same effect
+     *     gw.setColor("#bfbfbf");
+     *     gw.setColor("#ffbfbfbf");
+     *     gw.setColor(0xffbfbfbf);
+     *     gw.setColor(4290756543);
+     * </pre>
      */
     void setColor(int color);
     void setColor(const std::string& color);
