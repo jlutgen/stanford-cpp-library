@@ -416,6 +416,8 @@ void DawgLexicon::readBinaryFile(std::istream& input) {
     input.seekg(0, std::ios::beg);
     long startIndex, numBytes;
     char firstFour[4], expected[] = "DAWG";
+    input.clear();
+    input.seekg(0, std::ios::beg);
     if (input.fail()) {
         error("DawgLexicon::addWordsFromFile: Couldn't read input");
     }
