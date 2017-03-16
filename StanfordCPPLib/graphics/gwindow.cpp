@@ -1102,12 +1102,16 @@ int convertColorToRGB(const std::string& colorName) {
     return colorTable()[name];
 }
 
+// If alpha component is 0, assume opaque is intended, so return "#rrggbb".
+// If alpha component is 255, then color is opaque, so return "#rrggbb".
+// Otherwise, return "#aarrggbb".
 std::string convertRGBToColor(int rgb) {
     std::ostringstream os;
     os << std::hex << std::setfill('0') << std::uppercase << "#";
-    rgb = fixAlpha(rgb);
     int aa = (rgb >> 24 & 0xFF);
-    if (aa != 0xFF) os << std::setw(2) << aa;
+    if (aa != 0 && aa != 0xFF) {
+        os << std::setw(2) << aa;
+    }
     os << std::setw(2) << (rgb >> 16 & 0xFF);
     os << std::setw(2) << (rgb >> 8 & 0xFF);
     os << std::setw(2) << (rgb & 0xFF);
@@ -1120,11 +1124,11 @@ void exitGraphics() {
     }
 }
 
-// if alpha is 0, assume that the client meant to use
-// an opaque color and add ff as alpha channel
+// if RGB is not completely black, but alpha is 0, assume that the
+// client meant to use an opaque color and add ff as alpha channel
 static int fixAlpha(int argb) {
     int alpha = ((argb & 0xff000000) >> 24) & 0x000000ff;
-    if (alpha == 0) {
+    if (alpha == 0 && (argb & 0x00ffffff) != 0) {
         argb = argb | 0xff000000;   // set full 255 alpha
     }
     return argb;
