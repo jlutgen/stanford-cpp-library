@@ -12,7 +12,7 @@ void alphatest() {
     gw.drawLine(100, 0, 500, 500);
     gw.setColor("#0000ff");
     gw.fillRect(100, 100, 100, 100);
-    gw.setColor(0xe0ee4411);
+    gw.setColor(0xe0ee4411, true);
     gw.fillRect(150, 150, 100, 100);
     gw.setColor("#f811ee44");
     gw.fillOval(180, 180, 100, 100);
@@ -37,6 +37,7 @@ void alphatest() {
     gw.add(oval, 200, 200);
 
     GRect *rect = new GRect(60, 60);
+    GArc *rect = new GArc(60, 60, 45, 100);
     rect->setColor("black");
     rect->setFillColor(oval->getColor());
     rect->setFilled(true);

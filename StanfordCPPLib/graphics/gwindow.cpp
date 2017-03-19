@@ -211,6 +211,7 @@ void GWindow::initGWindow(double width, double height, bool visible) {
     gwd->windowY = 0;
     gwd->top = new GCompound();
     gwd->colorInt = 0;
+    gwd->colorIntHasAlpha = false;
     gwd->closed = false;
     gwd->visible = visible;
     gwd->resizable = false;
@@ -877,10 +878,11 @@ void GWindow::setCloseOperation(CloseOperation op) {
     stanfordcpplib::getPlatform()->gwindow_setCloseOperation(*this, (int) op);
 }
 
-void GWindow::setColor(int rgb) {
+void GWindow::setColor(int rgb, int hasAlpha) {
     if (gwd) {
-        gwd->color = convertRGBToColor(rgb);
+        gwd->color = convertRGBToColor(rgb, hasAlpha);
         gwd->colorInt = rgb;
+        gwd->colorIntHasAlpha = hasAlpha;
     }
 }
 
@@ -1102,14 +1104,13 @@ int convertColorToRGB(const std::string& colorName) {
     return colorTable()[name];
 }
 
-// If alpha component is 0, assume opaque is intended, so return "#rrggbb".
-// If alpha component is 255, then color is opaque, so return "#rrggbb".
-// Otherwise, return "#aarrggbb".
-std::string convertRGBToColor(int rgb) {
+// Returns string of the form "#rrggbb" if `hasAlpha` is false (the default).
+// Returns a string of the form "#aarrggbb" if `hasAlpha` is true.
+std::string convertRGBToColor(int rgb, bool hasAlpha) {
     std::ostringstream os;
     os << std::hex << std::setfill('0') << std::uppercase << "#";
-    int aa = (rgb >> 24 & 0xFF);
-    if (aa != 0 && aa != 0xFF) {
+    if (hasAlpha) {
+        int aa = (rgb >> 24 & 0xFF);
         os << std::setw(2) << aa;
     }
     os << std::setw(2) << (rgb >> 16 & 0xFF);

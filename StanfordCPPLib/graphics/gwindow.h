@@ -75,6 +75,7 @@ struct GWindowData {
     std::string color;
     std::string font;
     int colorInt;
+    bool colorIntHasAlpha;
     bool visible;
     bool resizable;
     bool closed;
@@ -685,16 +686,28 @@ public:
      * opaque. If the <code>aa</code> pair is omitted from the color string,
      * the alpha component is set to 255 by default.
      *
+     * <p>Finally, the color may be specified as an integer
+     * <code>0xaarrggbb</code>. By default, <code>setColor</code> ignores the
+     * alpha bits <code>aa</code> and assumes the color is opaque, unless
+     * the code>hasAlpha</code> parameter is <code>true</code>. For example,
+     * <code>setColor(0)</code> specifies pure black, but
+     * <code>setColor(0, true)</code> is equivalent to
+     * <code>setColor(0x00000000, true)</code>, which specifies a black
+     * color that is completely transparent.
+     *
      * Sample usages:
      * <pre>
-     *     gw.setColor("LIGHT_GRAY");  // these five statements all have the same effect
-     *     gw.setColor("#bfbfbf");
-     *     gw.setColor("#ffbfbfbf");
-     *     gw.setColor(0xffbfbfbf);
-     *     gw.setColor(4290756543);
+     *     gw.setColor("BLUE");  // these five statements all have the same effect
+     *     gw.setColor("#0000ff");
+     *     gw.setColor("#ff0000ff");
+     *     gw.setColor(0xff);
+     *     gw.setColor(0xff0000bf, true);
+     *
+     *     gw.setColor("#c00000ff"); // blue, with alpha component 0xc0 (192, or 25% transparent)
+     *     gw.setColor(0xc00000ff, true); // same
      * </pre>
      */
-    void setColor(int color);
+    void setColor(int color, int hasAlpha = false);
     void setColor(const std::string& color);
 
     /*
@@ -932,7 +945,7 @@ int convertColorToRGB(const std::string& colorName);
  * <code>gg</code>, and <code>bb</code> values are two-digit
  * hexadecimal numbers indicating the intensity of that component.
  */
-std::string convertRGBToColor(int rgb);
+std::string convertRGBToColor(int rgb, bool hasAlpha = false);
 
 /*
  * Function: exitGraphics

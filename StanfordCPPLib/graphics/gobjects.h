@@ -302,8 +302,17 @@ public:
      * transparent, and one with an alpha component of 255 (0xff) is completely
      * opaque. If the <code>aa</code> pair is omitted from the color string,
      * the alpha component is set to 255 by default.
+     *
+     * <p>Finally, the color may be specified as an integer
+     * <code>0xaarrggbb</code>. By default, <code>setColor</code> ignores the
+     * alpha bits <code>aa</code> and assumes the color is opaque, unless
+     * the code>hasAlpha</code> parameter is <code>true</code>. For example,
+     * <code>setColor(0)</code> specifies pure black, but
+     * <code>setColor(0, true)</code> is equivalent to
+     * <code>setColor(0x00000000, true)</code>, which specifies a black
+     * color that is completely transparent.
      */
-    void setColor(int rgb);
+    void setColor(int rgb, bool hasAlpha = false);
     void setColor(const std::string& color);
 
     /*
@@ -460,7 +469,7 @@ public:
      * As a side effect, sets this object to be filled (setFilled(true)).
      * If an empty string is passed, sets filled to false.
      */
-    void setFillColor(int rgb);
+    void setFillColor(int rgb, bool hasAlpha = false);
     void setFillColor(const std::string& color);
 
     /*
@@ -697,7 +706,7 @@ public:
      * If an empty string is passed, sets filled to false.
      */
     void setFillColor(const std::string& color);
-    void setFillColor(int rgb);
+    void setFillColor(int rgb, bool hasAlpha = false);
 
     /*
      * Method: setFilled
@@ -828,7 +837,7 @@ public:
      * method.
      */
     void setFillColor(const std::string& color);
-    void setFillColor(int rgb);
+    void setFillColor(int rgb, bool hasAlpha = false);
 
     /*
      * Method: setFilled
@@ -1372,7 +1381,7 @@ public:
      * Sets the color used to display the filled region of this polygon.
      */
     void setFillColor(const std::string& color);
-    void setFillColor(int rgb);
+    void setFillColor(int rgb, bool hasAlpha = false);
 
     /*
      * Method: setFilled
