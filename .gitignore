@@ -1,5 +1,6 @@
 *.pro.user
 .DS_Store
+.project
 deploy-*.pl
 Autograder_QtCreatorProject/lib/autograder
 Autograder_QtCreatorProject/lib/StanfordCPPLib
@@ -7,6 +8,7 @@ build/
 build_*/
 JavaBackEnd/eclipseproject/bin/
 JavaBackEnd/eclipseproject/obf/temp/
+JavaBackEnd/eclipseproject/src/stanford/karel
 JavaBackEnd/eclipseproject/src/stanford/karel/
 Karel/src/CollectNewspaper.java
 Karel/bin/
