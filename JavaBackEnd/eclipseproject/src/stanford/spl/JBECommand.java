@@ -381,6 +381,8 @@ public abstract class JBECommand {
 	 */
 	public boolean shouldRunOnSwingEventThread() {
 		String className = getClass().getSimpleName();
+		if (className.startsWith("GBuff"))
+			return false;
 		return className.startsWith("G")
 				// || className.startsWith("JBEConsole")
 				|| className.startsWith("TopCompound");

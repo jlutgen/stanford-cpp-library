@@ -247,14 +247,18 @@ public class GBufferedImage extends GInteractor {
 	
 	// JL: SwingUtilities.invokeLater
 	private void repaintImage() {
-		Dimension oldSize = label.getPreferredSize();
-		label.setIcon(new ImageIcon(bufferedImage));
-		Dimension size = new Dimension(imageWidth, imageHeight);
-		if (!size.equals(oldSize)) {
-			label.setPreferredSize(size);
-			label.setSize(size);
-		}
-		// label.repaint();
-		// label.paintImmediately(0, 0, imageWidth, imageHeight);
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				Dimension oldSize = label.getPreferredSize();
+				label.setIcon(new ImageIcon(bufferedImage));
+				Dimension size = new Dimension(imageWidth, imageHeight);
+				if (!size.equals(oldSize)) {
+					label.setPreferredSize(size);
+					label.setSize(size);
+					// label.repaint();
+					// label.paintImmediately(0, 0, imageWidth, imageHeight);
+				}
+			}
+		});
 	}
 }
